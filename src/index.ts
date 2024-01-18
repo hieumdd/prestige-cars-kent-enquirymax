@@ -9,10 +9,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(({ method, path, body }, res, next) => {
-    logger.info({ method, path, body });
+app.use(({ method, path, query, body }, res, next) => {
+    const httpRequest = { requestMethod: method, path, query, body };
+    logger.debug({ httpRequest });
     res.on('finish', () => {
-        logger.debug({ method, path, body, status: res.statusCode });
+        logger.debug({ httpRequest: { ...httpRequest, status: res.statusCode } });
     });
     next();
 });
