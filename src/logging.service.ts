@@ -3,8 +3,6 @@ import stringify from 'safe-stable-stringify';
 
 export const logger = createLogger({
     level: 'debug',
-    format: format.combine(
-        format.printf(({ level, ...message }) => stringify({ severity: level, ...message })!),
-    ),
+    format: format.combine(format.printf(({ level, ...message }) => stringify({ severity: level, ...message })!)),
     transports: [new transports.Console()],
 });
