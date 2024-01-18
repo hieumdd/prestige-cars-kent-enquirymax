@@ -29,4 +29,12 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
     res.status(500).json({ error });
 });
 
-app.listen(8080);
+const server = app.listen(8080);
+
+['SIGINT', 'SIGTERM'].forEach((signal) => {
+    process.on(signal, () => {
+        server.close(() => {
+            process.exit(0);
+        });
+    });
+});
